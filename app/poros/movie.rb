@@ -1,5 +1,5 @@
 class Movie
-  attr_reader :id, :title, :vote_average, :runtime, :genres, :overview, :poster_path
+  attr_reader :id, :title, :vote_average, :runtime, :genres, :overview, :poster_path, :release_date
 
   def initialize(data)
     @id = data[:id]
@@ -9,6 +9,7 @@ class Movie
     @genres = data[:genres]&.map { |genre| genre[:name] } || []
     @overview = data[:overview]
     @poster_path = data[:poster_path]
+    @release_date = data[:release_date]
   end
 
   def formatted_runtime

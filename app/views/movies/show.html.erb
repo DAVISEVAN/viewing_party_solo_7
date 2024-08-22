@@ -6,14 +6,12 @@
 <p><strong>Genres:</strong> <%= @movie.genres.join(', ') %></p>
 <p><strong>Overview:</strong> <%= @movie.overview %></p>
 
-<!-- Display movie poster if available -->
 <% if @movie.poster_path.present? %>
   <div>
     <img src="https://image.tmdb.org/t/p/w500<%= @movie.poster_path %>" alt="<%= @movie.title %> poster">
   </div>
 <% end %>
 
-<!-- Display the first 10 cast members -->
 <h3>Cast</h3>
 <ul>
   <% @cast.each do |member| %>
@@ -21,7 +19,6 @@
   <% end %>
 </ul>
 
-<!-- Display the reviews -->
 <h3>Reviews</h3>
 <p>Total Reviews: <%= @reviews.count %></p>
 <% @reviews.each do |review| %>
@@ -32,4 +29,4 @@
 <%= button_to 'Create a Viewing Party', new_user_movie_viewing_party_path(@user, @movie), class: 'btn btn-primary' %>
 
 <!-- Link to go back to the discover page -->
-<%= link_to 'Back to Discover', user_discover_path(@user), class: 'btn btn-secondary' %>
+<%= link_to 'Back to Discover', user_discover_index_path(@user), class: 'btn btn-secondary' %>

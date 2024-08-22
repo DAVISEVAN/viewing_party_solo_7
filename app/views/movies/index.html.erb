@@ -1,6 +1,5 @@
 <h1>Movies</h1>
 
-<!-- Display the list of movies -->
 <% if @movies.present? %>
   <ul>
     <% @movies.each do |movie| %>
@@ -15,4 +14,4 @@
 <% end %>
 
 <!-- Link to go back to the discover page -->
-<%= link_to 'Back to Discover', user_discover_path(@user), class: 'btn btn-secondary' %>
+<%= link_to 'Back to Discover', user_discover_index_path(@user), class: 'btn btn-secondary' %>
