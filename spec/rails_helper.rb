@@ -1,4 +1,6 @@
-# This file is copied to spec/ when you run 'rails generate rspec:install'
+require 'webmock/rspec'
+WebMock.disable_net_connect!(allow_localhost: true)
+
 require 'simplecov'
 SimpleCov.start
 require 'spec_helper'
@@ -31,6 +33,8 @@ begin
 rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
+WebMock.disable_net_connect!(allow_localhost: true)
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_paths = [
