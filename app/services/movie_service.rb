@@ -1,5 +1,6 @@
 require 'faraday'
 class MovieService
+
   def self.search_movies(query)
     response = connection.get('search/movie') do |req|
       req.params['query'] = query

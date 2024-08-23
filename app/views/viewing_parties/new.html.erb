@@ -1,16 +1,35 @@
-<h1>Create a Viewing Party</h1>
+  <h1><%= @movie.title %></h1>
+  <%= form_with(model: [@user, @viewing_party], url: user_movie_viewing_parties_path(@user, @movie.id), local: true) do |form| %>
+  
+  <div class="form-group">
+    <%= form.label :duration, "Duration of Party (minutes)" %>
+    <%= form.number_field :duration, value: @movie.runtime %>
+  </div>
 
-<%= form_with url: user_movie_viewing_parties_path(@user, @movie), method: :post, local: true do |f| %>
-  <%= f.label :date, "Date" %>
-  <%= f.date_field :date %>
+  <div class="form-group">
+    <%= form.label :date, "When:" %>
+    <%= form.date_field :date %>
+  </div>
 
-  <%= f.label :start_time, "Start Time" %>
-  <%= f.time_field :start_time %>
+  <div class="form-group">
+    <%= form.label :start_time, "Start Time:" %>
+    <%= form.time_field :start_time %>
+  </div>
 
-  <%= f.label :invitees, "Invitees" %>
-  <%= f.text_field :invitees %>
+  <div class="form-group">
+    <%= form.label :guest_1_email, "Guest 1 Email:" %>
+    <%= form.text_field :guest_1_email, name: 'guest_1_email' %>
+  </div>
 
-  <%= f.submit "Create Party", class: "btn btn-primary" %>
+  <div class="form-group">
+    <%= form.label :guest_2_email, "Guest 2 Email:" %>
+    <%= form.text_field :guest_2_email, name: 'guest_2_email' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :guest_3_email, "Guest 3 Email:" %>
+    <%= form.text_field :guest_3_email, name: 'guest_3_email' %>
+  </div>
+
+  <%= form.submit "Create Viewing Party", class: "btn btn-primary" %>
 <% end %>
-
-<%= link_to 'Back to Movie', user_movie_path(@user, @movie), class: 'btn btn-secondary' %>

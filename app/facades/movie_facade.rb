@@ -1,4 +1,6 @@
 class MovieFacade
+
+  
   def self.search_movies(query)
     json = MovieService.search_movies(query)
     json[:results].map do |movie_data|
