@@ -1,0 +1,41 @@
+<h1><%= @movie.title %></h1>
+
+<%= form_with model: [@user, @viewing_party], url: user_movie_viewing_parties_path(@user, @movie.id || 0), local: true do |form| %>
+  <div class="field">
+    <%= form.label :duration, "Duration of Party (minutes)" %>
+    <%= form.number_field :duration, value: @movie.runtime %>
+  </div>
+
+  <div class="field">
+    <%= form.label :date, "When:" %>
+    <%= form.date_field :date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :start_time, "Start Time:" %>
+    <%= form.time_field :start_time %>
+  </div>
+
+  <h3>Guests</h3>
+
+  <div class="field">
+    <%= label_tag 'guest_1_email', "Guest 1 Email:" %>
+    <%= text_field_tag 'guest_1_email' %>
+  </div>
+
+  <div class="field">
+    <%= label_tag 'guest_2_email', "Guest 2 Email:" %>
+    <%= text_field_tag 'guest_2_email' %>
+  </div>
+
+  <div class="field">
+    <%= label_tag 'guest_3_email', "Guest 3 Email:" %>
+    <%= text_field_tag 'guest_3_email' %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Create Viewing Party" %>
+  </div>
+<% end %>
+
+<%= link_to 'Back to Movie', user_movie_path(@user, @movie.id) %>

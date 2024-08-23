@@ -44,6 +44,8 @@ gem "bootsnap", require: false
 
 gem "bootstrap" 
 gem "faker"
+gem "faraday"
+gem "factory_bot_rails"
 
 
 
@@ -76,4 +78,6 @@ group :test do
   gem "capybara"
   gem "launchy"
   gem "simplecov"
+  gem "webmock"
+  gem "faraday"
 end

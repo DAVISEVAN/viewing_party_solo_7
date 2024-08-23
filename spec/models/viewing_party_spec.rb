@@ -1,22 +1,39 @@
 require 'rails_helper'
 
 RSpec.describe ViewingParty, type: :model do
-  before(:each) do
-      @user_1 = User.create!(name: 'Sam', email: 'sam@email.com')
-      @user_2 = User.create!(name: 'Tommy', email: 'tommy@email.com')
-      @party = ViewingParty.create!(date: "2023-12-01", start_time: "07:25", duration: 175)
-      UserParty.create!(user_id: @user_1.id, viewing_party_id: @party.id, host: true)
-      UserParty.create!(user_id: @user_2.id, viewing_party_id: @party.id, host: false)
-  end
-  
-  describe 'relationships' do
-      it { should have_many :user_parties }
-      it { should have_many(:users).through(:user_parties) }
+  let(:movie) { double("Movie", runtime: 180) }
+
+  before do
+    allow(MovieFacade).to receive(:find_movie).and_return(movie)
   end
 
-  describe "instance methods" do
-    it "returns user that is hosting the party" do
-      expect(@party.find_host).to eq (@user_1)
+  describe 'validations' do
+    it 'validates that duration is greater than or equal to the movie runtime' do
+      viewing_party = ViewingParty.new(duration: 180, movie_id: 120, date: '2024-12-31', start_time: '19:00')
+      expect(viewing_party.valid?).to be true
+    end
+
+    it 'validates numericality of duration' do
+      viewing_party = ViewingParty.new(duration: 'abc', movie_id: 120, date: '2024-12-31', start_time: '19:00')
+      viewing_party.valid?
+      expect(viewing_party.errors[:duration]).to include("must be greater than or equal to the movie runtime")
+    end
+
+    it 'validates presence of date and start_time' do
+      viewing_party = ViewingParty.new(duration: 180, movie_id: 120)
+      viewing_party.valid?
+      expect(viewing_party.errors[:date]).to include("can't be blank")
+      expect(viewing_party.errors[:start_time]).to include("can't be blank")
+    end
+  end
+
+  describe '#find_host' do
+    it 'returns the user who is the host of the viewing party' do
+      user = create(:user)
+      viewing_party = ViewingParty.create!(duration: 180, movie_id: 120, date: '2024-12-31', start_time: '19:00')
+      UserParty.create!(user: user, viewing_party: viewing_party, host: true)
+
+      expect(viewing_party.find_host).to eq(user)
     end
   end
 end

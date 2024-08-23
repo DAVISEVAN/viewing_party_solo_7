@@ -1,0 +1,13 @@
+<h1>Discover Movies</h1>
+
+<!-- Button to discover top-rated movies -->
+<%= button_to 'Discover Top Rated Movies', user_movies_path(@user), method: :get, class: 'btn btn-primary' %>
+
+<!-- Form to search movies by title -->
+<%= form_with url: user_movies_path(@user), method: :get, local: true do |form| %>
+  <div class="form-group">
+    <%= form.label :query, "Search by Movie Title" %>
+    <%= form.text_field :query, class: "form-control" %>
+  </div>
+  <%= form.submit "Search", class: "btn btn-secondary" %>
+<% end %>
