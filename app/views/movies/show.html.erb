@@ -25,8 +25,8 @@
   <p><strong><%= review.author %>:</strong> <%= review.content %></p>
 <% end %>
 
-<!-- Button to create a Viewing Party -->
-<%= button_to 'Create a Viewing Party', new_user_movie_viewing_party_path(@user, @movie), class: 'btn btn-primary' %>
+<!-- Create a Viewing Party -->
+<%= link_to 'Create a Viewing Party', new_user_movie_viewing_party_path(@user, @movie.id), class: 'btn btn-primary' %>
 
 <!-- Link to go back to the discover page -->
 <%= link_to 'Back to Discover', user_discover_index_path(@user), class: 'btn btn-secondary' %>
