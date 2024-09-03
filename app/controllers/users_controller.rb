@@ -9,23 +9,37 @@ class UsersController < ApplicationController
    end
 
    def create
-      user = User.new(user_params)
-      if user.save
+      @user = User.new(user_params)
+      if @user.save
          flash[:success] = 'Successfully Created New User'
-         redirect_to user_path(user)
+         redirect_to user_path(@user)
       else
-         flash[:error] = "#{error_message(user.errors)}"
+         flash[:error] = @user.errors.full_messages.to_sentence
          redirect_to register_user_path
       end   
    end
 
+   def login_form
+     
+   end
+
+   def login_user
+     user = User.find_by(email: params[:email])
+       if user && user.authenticate(params[:password])
+         redirect_to user_path(user), notice: "Welcome, #{user.name}"
+       else
+         flash[:error] = 'Incorrect email or password'
+         render :login_form
+       end
+   end
+   
 
 
 
 private
 
   def user_params
-      params.require(:user).permit(:name, :email)
+   params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
 
 end
