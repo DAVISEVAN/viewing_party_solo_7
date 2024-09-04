@@ -1,9 +1,18 @@
+<h1>Login</h1>
+
 <%= form_with url: login_path, method: :post do %>
-  <%= label_tag :email %>
+  <%= label_tag :email, 'Email' %>
   <%= text_field_tag :email %>
 
-  <%= label_tag :password %>
+  <%= label_tag :password, 'Password' %>
   <%= password_field_tag :password %>
 
+  <%= label_tag :location, 'Location' %>
+  <%= text_field_tag :location, cookies[:location] || '' %> 
+
   <%= submit_tag 'Log In' %>
+<% end %>
+
+<% if flash[:error] %>
+  <p><%= flash[:error] %></p>
 <% end %>

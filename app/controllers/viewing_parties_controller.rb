@@ -1,4 +1,5 @@
 class ViewingPartiesController < ApplicationController
+  before_action :require_login, only: %i[new create]
   def new
     @user = User.find(params[:user_id])
     @movie = MovieFacade.find_movie(params[:movie_id].to_i)

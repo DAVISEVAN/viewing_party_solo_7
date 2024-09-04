@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe 'Login with Location', type: :feature do
+RSpec.describe 'Remember User with Session', type: :feature do
   before :each do
     @user = User.create!(name: 'Sam', email: 'sam@example.com', password: 'password123', password_confirmation: 'password123')
   end
 
-  it 'stores location in a cookie and shows it on login page' do
+  it 'logs in a user and remembers them across visits' do
     visit login_path
 
     fill_in :email, with: 'sam@example.com'
@@ -15,10 +15,13 @@ RSpec.describe 'Login with Location', type: :feature do
 
     expect(page).to have_content('Welcome, Sam')
 
-    click_link 'Log Out'
-    visit login_path
-
     
-    expect(find_field('Location').value).to eq('Denver, CO')
+    visit root_path
+
+    expect(page).to have_link('Log Out')
+    expect(page).to_not have_link('Log In')
+
+    click_link 'Log Out'
+    expect(page).to have_link('Log In')
   end
 end

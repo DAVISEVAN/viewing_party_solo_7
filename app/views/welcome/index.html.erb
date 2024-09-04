@@ -6,9 +6,19 @@
 <br>
 <%= link_to 'Home', root_path %>
 
-<h2>Existing Users:</h2>
-<ul>
-  <% @users.each do |user| %>
-    <li><%= link_to user.name, user_path(user) %></li>
-  <% end %>
-</ul>
+<% if cookies[:location] %>
+  <p>Your location: <%= cookies[:location] %></p>
+<% end %>
+
+<% if session[:user_id] %>
+  <%= link_to 'Log Out', logout_path %>
+  <h2>Existing Users:</h2>
+  <ul>
+    <% @users.each do |user| %>
+      <li><%= link_to user.name, user_path(user) %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <%= link_to 'Log In', login_path %>
+  <%= link_to 'Create an Account', register_user_path %>
+<% end %>
